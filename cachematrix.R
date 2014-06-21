@@ -24,7 +24,7 @@ makeCacheMatrix <- function(x = matrix()) {
                 , setMatrix = setMatrix
                 , getMatrix = getMatrix
                 , computeInverse = computeInverse
-                , inverse = inverse
+                , getInverse = getInverse
                 )
         )
 }
@@ -35,7 +35,7 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
   
-  if ( is.null(x$inverse ) )
+  if ( is.null(x$getInverse() ) )
   {
     op <- options(); # store options settings
     options(digits.secs=6) # update for millisecond or better resolution
@@ -44,7 +44,11 @@ cacheSolve <- function(x, ...) {
     print( paste("Computed Inverse  at ", Sys.time()) )
     options(op)  # restore options
   }
+  else
+  {
+    print("retrieving inverse from cache")
+  }
   
-  return(x$inverse)
+  return(x$getInverse())
   
 }
