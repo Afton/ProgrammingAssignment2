@@ -4,16 +4,22 @@
 ## Write a short comment describing this function
 
 makeCacheMatrix <- function(x = matrix()) {
-  inverse <- NULL
+  inverse <- NULL # cache storage
+  
+  # close over x
   getMatrix <- function() x
   
+  # set the matrix and clear the cache
   setMatrix <- function(y = matrix()) 
   { 
     x <<- y
     inverse <<- NULL
   }
   
+  # solve and cache the result
   computeInverse <- function(x) { inverse <<- solve( getMatrix() ) }
+  
+  # pull from cache
   getInverse <- function() { inverse }
 
     
@@ -35,6 +41,7 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
   
+  # Compute it if the cache is empty
   if ( is.null(x$getInverse() ) )
   {
     op <- options(); # store options settings
@@ -49,6 +56,7 @@ cacheSolve <- function(x, ...) {
     print("retrieving inverse from cache")
   }
   
+  # at this point, we have an inverse, either retrieved from cache, or directly computed
   return(x$getInverse())
   
 }
